@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+/home/anani/Desktop/springProjects/.metadata/.plugins/org.eclipse.wst.jsdt.core/indexes
+80324610.index
+400470524.index
+2054760086.index
+3242523972.index
+2530041249.index
+952674152.index
