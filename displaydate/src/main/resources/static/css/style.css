@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+h1 {
+	color: red;
+}
+
+div {
+	display: flex;
+	justify-content: center;
+}
+
+button {
+	padding: 1rem;
+	font-size: 1.25rem;
+	color: white;
+	background-color: azure;
+}
