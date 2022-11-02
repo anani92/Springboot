@@ -7,7 +7,7 @@
 <head>
 <!-- for Bootstrap CSS -->
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
-<!-- YOUR own local CSS -->
+<link rel="stylesheet" type="text/css" href="/css/style.css">
 <!-- For any Bootstrap that uses JS or jQuery-->
 <script src="/webjars/jquery/jquery.min.js"></script>
 <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
@@ -57,7 +57,7 @@
 	</div>
 	<div class="d-block m-5">
 		<h3>Activities:</h3>
-		<div name="activities" class="bg-light border d-block scroll" height="400">
+		<div  class="bg-light border d-block overflow-scroll activities">
 			<c:forEach items="${activities}" var="item">
 	    		${item}
 			</c:forEach>
