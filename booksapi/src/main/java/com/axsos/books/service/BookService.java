@@ -34,16 +34,15 @@ public class BookService {
         }
     }
     
-    public void delete(Book book) {
+    public void deleteBook(Book book) {
     	bookRepository.delete(book);
     }
-	public Book updateBook(Long id, String title, String desc, String lang, Integer numOfPages) {
-		// TODO Auto-generated method stub
+	public Book updateBook(Long id, Book book) {
 		Book bookToUpdate = this.findBook(id);
-		bookToUpdate.setTitle(title);
-		bookToUpdate.setDescription(desc);
-		bookToUpdate.setLanguage(lang);
-		bookToUpdate.setNumberOfPages(numOfPages);
+		bookToUpdate.setTitle(book.getTitle());
+		bookToUpdate.setDescription(book.getDescription());
+		bookToUpdate.setLanguage(book.getLanguage());
+		bookToUpdate.setNumberOfPages(book.getNumberOfPages());
 		bookRepository.save(bookToUpdate);
 		return bookToUpdate;
 	}
