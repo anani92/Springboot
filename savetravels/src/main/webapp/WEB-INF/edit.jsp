@@ -11,33 +11,10 @@
 <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
 </head>
 <body>
-	<h1>Save Travels</h1>
-	<div class="container">
-		<table class="table table-light">
-			<thead>
-				<tr>
-					<td>Id</td>
-					<td>Expense</td>
-					<td>Vendor</td>
-					<td>amount</td>
-					<td>Action</td>
-				</tr>
-			</thead>
-			<tbody>
-				<c:forEach var="expense" items="${allexpenses }">
-					<tr>
-						<td>${expense.id }</td>
-						<td>${expense.getExpenseName() }</td>
-						<td>${expense.getVendor() }</td>
-						<td>${expense.getAmount() }</td>
-						<td><a href="/edit/${expense.id }">edit</a></td>
-				</c:forEach>
-			</tbody>
-		</table>
-	</div>
-
-	<form:form action="/expenses" method="post" modelAttribute="expenses"
+	<form:form action="/edit/${expenseToEdit.id }" method="post" modelAttribute="expenseToEdit"
 		class="form form-group border container">
+		    <input type="hidden" name="_method" value="put">
+		
 		<p>
 			<form:label path="expenseName">Expense name</form:label>
 			<form:errors path="expenseName" />
@@ -61,7 +38,6 @@
 		</p>
 		<input type="submit" value="Submit" class="btn btn-success" />
 	</form:form>
-
 
 </body>
 </html>
