@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page isErrorPage="true"%>
@@ -19,26 +18,26 @@
 		<form:form action="/register/" method="post" modelAttribute="newUser">
 			<h2>Register</h2>
 			<div>
-			<form:errors path="username"></form:errors>
-			<form:label path="username">User Name:</form:label>
-			<form:input path="username"></form:input>
-		</div>
-		<div>
-			<form:errors path="email"></form:errors>
-			<form:label path="email">Email:</form:label>
-			<form:input type="email" path="email"></form:input>
-		</div>
-		<div>
-			<form:errors path="password"></form:errors>
-			<form:label path="password">Password:</form:label>
-			<form:input type="password" path="password"></form:input>
-		</div>
-		<div>
-			<form:errors path="confirm"></form:errors>
-			<form:label path="confirm">Confirm Password:</form:label>
-			<form:input type="password" path="confirm"></form:input>
-		</div>
-		<input type="submit" value="Register" />
+				<form:errors path="userName"></form:errors>
+				<form:label path="userName">User Name:</form:label>
+				<form:input path="userName"></form:input>
+			</div>
+			<div>
+				<form:errors path="email"></form:errors>
+				<form:label path="email">Email:</form:label>
+				<form:input type="email" path="email"></form:input>
+			</div>
+			<div>
+				<form:errors path="password"></form:errors>
+				<form:label path="password">Password:</form:label>
+				<form:input type="password" path="password"></form:input>
+			</div>
+			<div>
+				<form:errors path="confirm"></form:errors>
+				<form:label path="confirm">Confirm Password:</form:label>
+				<form:input type="password" path="confirm"></form:input>
+			</div>
+			<input type="submit" value="Register" />
 		</form:form>
 		<form:form action="/login" method="post" modelAttribute="newLogin">
 			<h2>Log In</h2>
