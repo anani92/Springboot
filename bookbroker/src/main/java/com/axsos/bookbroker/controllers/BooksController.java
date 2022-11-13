@@ -27,7 +27,8 @@ public class BooksController {
 	@Autowired
 	private final BookService bookService;
 	@Autowired
-	private final UserService userService; 
+	private final UserService userService;
+
 	public BooksController(BookService bookService, UserService userService) {
 		this.bookService = bookService;
 		this.userService = userService;
@@ -39,7 +40,7 @@ public class BooksController {
 			return "redirect:/";
 		}
 		User loggedUser = (User) session.getAttribute("user");
-		model.addAttribute("borrowedBooks", bookService.getBorrowedBooks(loggedUser.getId()));
+		model.addAttribute("borrowedBooks", bookService.findAllBorrowedBooks());
 		model.addAttribute("user", loggedUser);
 		model.addAttribute("allbooks", bookService.allBooks());
 		return "home.jsp";
@@ -109,55 +110,28 @@ public class BooksController {
 		return "redirect:/books/home";
 	}
 
-	@GetMapping("/books/dashbord")
-	public String userDashbord(Model model, HttpSession session) {
-		if (session.getAttribute("user") == null) {
-			return "redirect:/";
-		}
-		User loggedUser = (User) session.getAttribute("user");
-		System.out.println(loggedUser);
-		System.out.println(loggedUser.getBorrowedBooks());
-		List <Book> borrowedBooks = loggedUser.getBorrowedBooks();
-		model.addAttribute("user", loggedUser);
+	@GetMapping("/books/dashboard")
+	public String bookMarket(HttpSession session, Model model) {
+		User currentUser = (User) session.getAttribute("user");
+		model.addAttribute("user", userService.findUserById(currentUser.getId()));
 		model.addAttribute("availableBooks", bookService.findAvailableBooks());
-		model.addAttribute("borrowedBooks", borrowedBooks);
-
-		return "dashbord.jsp";
+		model.addAttribute("borrowedBooks", bookService.findAllBorrowedBooks());
+		return "dashboard.jsp";
 	}
 
 	@PutMapping("/books/borrow/{id}")
-	public String borrowBook(@PathVariable("id") Long id, HttpSession session,@RequestParam("borrowId") Long userid) {
-		User loggedUser = (User) session.getAttribute("user");
-		if (loggedUser == null) {
-			return "redirect:/";
-		}
-		Book bookToBorrow = bookService.findBook(id);
-		if (bookToBorrow.getBorrower() != null) {
-			return "redirect:/books/home";
-		}
-		List <Book> borrowedBooks = loggedUser.getBorrowedBooks(); 
-		borrowedBooks.add(bookToBorrow);
-		bookToBorrow.setBorrower(loggedUser);
-		loggedUser.setBorrowedBooks(borrowedBooks); 
-		bookService.saveBook(bookToBorrow);
-		return "redirect:/books/dashbord";
+	public String borrowBook(@RequestParam("borrowId") Long userBorrowid, @PathVariable("id") Long bookid) {
+		Book bookToBorrow = bookService.findBook(bookid);
+		bookService.borrowBook(userBorrowid, bookToBorrow);
+		return "redirect:/books/dashboard";
 	}
 
 	@PutMapping("/books/return/{id}")
-	public String returnBook(@PathVariable("id") Long id, HttpSession session) {
-		User loggedUser = (User) session.getAttribute("user");
-		if (loggedUser == null) {
-			return "redirect:/";
-		}
-		
-		List <Book> borrowedBooks = loggedUser.getBorrowedBooks();
-		Book bookToReturn = bookService.findBook(id);
-		bookToReturn.setBorrower(null);
-		borrowedBooks.remove(bookToReturn);
-		loggedUser.setBorrowedBooks(borrowedBooks);
-		bookService.saveBook(bookToReturn);
-		userService.save(loggedUser);
-		return "redirect:/books/dashbord";
+	public String returnBook(@PathVariable("id") Long bookid) {
+		Book bookToReturn = bookService.findBook(bookid);
+		bookService.returnBook(bookToReturn);
+		return "redirect:/books/dashboard";
+
 	}
 
 }

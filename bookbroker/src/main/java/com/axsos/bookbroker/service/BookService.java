@@ -51,12 +51,6 @@ public class BookService {
 		}
 	}
 
-	public List<Book> getBorrowedBooks(Long userId) {
-		User user = userService.findUserById(userId);
-
-		return user.getBorrowedBooks();
-	}
-
 	public List<Book> findAllBorrowedBooks() {
 		return bookRepo.findAllByborrowerIsNotNull();
 	}
@@ -65,6 +59,15 @@ public class BookService {
 		return bookRepo.findAllByborrowerIsNull();
 	}
 
+	public void borrowBook(Long userBorrowid, Book bookToBorrow) {
+		User user = userService.findUserById(userBorrowid);
+		bookToBorrow.setBorrower(user);
+		bookRepo.save(bookToBorrow);
+	}
 
+	public void returnBook(Book bookToReturn) {
+		bookToReturn.setBorrower(null);
+		bookRepo.save(bookToReturn);
+	}
 
 }
